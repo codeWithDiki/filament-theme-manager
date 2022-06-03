@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "Codewithdiki\\FilamentThemeManager\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "authors": [
         {
@@ -24,5 +27,6 @@
             "email": "diki.akbar1304@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

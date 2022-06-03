@@ -2,6 +2,8 @@
 
 namespace Codewithdiki\FilamentThemeManager;
 
+include_once ('helpers.php');
+
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;

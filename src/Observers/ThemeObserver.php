@@ -14,7 +14,7 @@ class ThemeObserver
      */
     public function created(Theme $theme)
     {
-        //
+        \Codewithdiki\FilamentThemeManager\Jobs\PreparingCloneJob::dispatch($theme);
     }
 
     /**
