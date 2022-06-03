@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('directory');
+            $table->string('vendor');
             $table->string('git_username');
             $table->string('git_repository');
+            $table->string('git_branch');
             $table->string('connection_type');
             $table->string('git_provider');
+            $table->boolean('is_child')->default(false);
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->longText('meta')->nullable();
 
             $table->timestamps();
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_themes');
+        Schema::dropIfExists('themes');
     }
 };

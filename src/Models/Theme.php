@@ -3,6 +3,7 @@
 namespace Codewithdiki\FilamentThemeManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -33,6 +34,12 @@ class Theme extends Model implements \Spatie\MediaLibrary\HasMedia
                 ->width(400)
                 ->height(400);
         });
+    }
+
+
+    public function parent_theme() : BelongsTo
+    {
+        return $this->belongsTo(Theme::class, 'parent_id');
     }
 
 }
