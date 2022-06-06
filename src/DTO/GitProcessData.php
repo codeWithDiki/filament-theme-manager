@@ -3,7 +3,7 @@
 namespace Codewithdiki\FilamentThemeManager\DTO;
 
 
-class GitCloneData extends \Spatie\DataTransferObject\DataTransferObject
+class GitProcessData extends \Spatie\DataTransferObject\DataTransferObject
 {
     public string $repository;
     
@@ -18,5 +18,7 @@ class GitCloneData extends \Spatie\DataTransferObject\DataTransferObject
     public string $connection_type;
 
     public string $directory;
+
+    public \Codewithdiki\FilamentThemeManager\Models\ThemeDeploymentLog $log;
 
 }

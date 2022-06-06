@@ -27,6 +27,9 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->longText('meta')->nullable();
 
+
+            $table->foreign('parent_id')->references('id')->on('themes');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

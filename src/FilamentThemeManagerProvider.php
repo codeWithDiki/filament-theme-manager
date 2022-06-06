@@ -2,7 +2,7 @@
 
 namespace Codewithdiki\FilamentThemeManager;
 
-include_once ('helpers.php');
+require_once ('helpers.php');
 
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
@@ -30,7 +30,7 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
 
         $package
         ->hasViews()
-        ->hasMigrations(['create_themes'])
+        ->hasMigrations(['create_themes', 'create_theme_deployment_logs'])
         ->hasConfigFile();
     }
 

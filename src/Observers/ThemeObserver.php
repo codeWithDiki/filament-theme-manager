@@ -14,7 +14,9 @@ class ThemeObserver
      */
     public function created(Theme $theme)
     {
-        \Codewithdiki\FilamentThemeManager\Jobs\PreparingCloneJob::dispatch($theme);
+        if(isset($theme->meta['deploy_after_created']) && $theme->meta['deploy_after_created']){
+            \Codewithdiki\FilamentThemeManager\Jobs\PreparingCloneJob::dispatch($theme);
+        }
     }
 
     /**

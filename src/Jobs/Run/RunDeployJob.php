@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Codewithdiki\FilamentThemeManager\Enum\DeploymentStatusEnum;
 
-class RunCloneJob implements ShouldQueue
+class RunDeployJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -42,55 +42,43 @@ class RunCloneJob implements ShouldQueue
 
             $this->gitCloneDTO->log->save();
 
-            if(file_exists($theme_directory)){
-                if(!is_dir($theme_directory)){
-                    throw new \Exception("Directory {$theme_directory} has already registered, but it's not a directory.");
-                }
-            }
-
-            if(!file_exists($theme_directory)){
-                mkdir($theme_directory);
-            }
-
             $vendor_directory = "{$theme_directory}/{$this->gitCloneDTO->vendor}";
             $full_theme_directory = "{$vendor_directory}/{$this->gitCloneDTO->directory}";
 
-
-            if(file_exists($vendor_directory)){
-                if(!is_dir($vendor_directory)){
-                    throw new \Exception("Directory {$vendor_directory} has already registered, but it's not a directory.");
-                }
-            }
-
-            if(!file_exists($vendor_directory)){
-                mkdir($vendor_directory);
-            }
-
-            if(file_exists($full_theme_directory)){
-                throw new \Exception("Directory {$full_theme_directory} has been used by other theme.");
+            if(!file_exists($full_theme_directory)){
+                throw new \Exception("Directory {$full_theme_directory} not found.");
             }
 
 
-            $cloneProcess = new Process([
+            $stash_process = new Process(['git', 'stash']);
+            $stash_process->setWorkingDirectory($full_theme_directory);
+            $stash_process->run();
+            $stash_output = [];
+
+            foreach($stash_process as $type => $data){
+                $stash_output[] = $data;
+            }
+
+            theme_deployment_log_writer($this->gitCloneDTO->log, $stash_output);
+
+
+            $pullProcess = new Process([
                 'git',
-                'clone',
-                '--single-branch',
-                '--branch',
+                'pull',
+                'origin',
                 $this->gitCloneDTO->branch,
-                $this->gitCloneDTO->repository,
-                $this->gitCloneDTO->directory
             ]);
-            $cloneProcess->setWorkingDirectory($vendor_directory);
-            $cloneProcess->run();
-            $cloneOutput = [];
+            $pullProcess->setWorkingDirectory($full_theme_directory);
+            $pullProcess->run();
+            $pullOutput = [];
 
-            foreach ($cloneProcess as $type => $data) {
-                $cloneOutput[] = $data; 
+            foreach ($pullProcess as $type => $data) {
+                $pullOutput[] = $data; 
             }
             
-            theme_deployment_log_writer($this->gitCloneDTO->log, $cloneOutput);
+            theme_deployment_log_writer($this->gitCloneDTO->log, $pullOutput);
 
-            if($cloneProcess->isSuccessful()){
+            if($pullProcess->isSuccessful()){
                 $getCurrentCommit = new Process([
                     'git',
                     'rev-parse',
@@ -110,10 +98,11 @@ class RunCloneJob implements ShouldQueue
                 $this->gitCloneDTO->log->commit = $currentCommit;
                 $this->gitCloneDTO->log->status = DeploymentStatusEnum::SUCCESSED()->value;
                 $this->gitCloneDTO->log->process_end_at = now();
+
                 $this->gitCloneDTO->log->save();
 
                 theme_deployment_log_writer($this->gitCloneDTO->log, [
-                    "Clone from repository {$this->gitCloneDTO->repository} successed!"
+                    "Deploy from repository {$this->gitCloneDTO->repository} successed!"
                 ]);
 
                 return;
@@ -125,7 +114,7 @@ class RunCloneJob implements ShouldQueue
             $this->gitCloneDTO->log->save();
 
             theme_deployment_log_writer($this->gitCloneDTO->log, [
-                "Clone from repository {$this->gitCloneDTO->repository} failed!",
+                "Deploy from repository {$this->gitCloneDTO->repository} failed!",
                 'Unexpected Error.'
             ]);
 

@@ -1,7 +1,7 @@
 {
     "name": "codewithdiki/filament-theme-manager",
     "description": "Plugin for laravel theme manager deploy your theme just by 1 click.",
-    "version" : "0.1.1",
+    "version" : "0.1.2",
     "require": {
         "php" : "^7.4|^8.0",
         "spatie/laravel-package-tools":"^1.11.0",

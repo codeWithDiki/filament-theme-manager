@@ -97,7 +97,7 @@ class ThemeResource extends Resource
                             ->options(
                                 collect(GitConnectionEnum::toValues())->combine(GitConnectionEnum::toLabels())->map(function($item){
                                     return ucwords(str_replace('_', ' ', strtolower($item)));
-                                })
+                                })->forget(GitConnectionEnum::HTTPS()->value)
                             )
                             ->helperText(
                                 function(\Filament\Forms\Components\Component $component){
@@ -114,6 +114,8 @@ class ThemeResource extends Resource
                                 })
                             )
                             ->required(),
+                            Checkbox::make('meta.deploy_after_created')
+                            ->visible(fn(\Livewire\Component $livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord),
                             TextInput::make('meta.git_password')
                             ->required()
                             ->visible(fn(callable $get) => $get('connection_type') == GitConnectionEnum::HTTPS()->value)
@@ -154,7 +156,7 @@ class ThemeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DeploymentLogsRelationManager::class
         ];
     }
     
@@ -164,6 +166,7 @@ class ThemeResource extends Resource
             'index' => Pages\ListThemes::route('/'),
             'create' => Pages\CreateTheme::route('/create'),
             'edit' => Pages\EditTheme::route('/{record}/edit'),
+            'view' => Pages\ViewTheme::route('/{record}/view'),
         ];
     }
 }
