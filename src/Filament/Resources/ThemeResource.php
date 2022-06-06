@@ -50,12 +50,12 @@ class ThemeResource extends Resource
                         'default' => 1
                     ])->schema([
                         Card::make([
-                            SpatieMediaLibraryFileUpload::make('Thumbnail')
-                            ->image()
-                            ->imageCropAspectRatio('16:9')
-                            ->imageResizeTargetWidth('1920')
-                            ->imageResizeTargetHeight('1080')
-                            ->collection('thumbnail'),
+                            // SpatieMediaLibraryFileUpload::make('Thumbnail')
+                            // ->image()
+                            // ->imageCropAspectRatio('16:9')
+                            // ->imageResizeTargetWidth('1920')
+                            // ->imageResizeTargetHeight('1080')
+                            // ->collection('thumbnail'),
                             Grid::make([
                                 'default' => 1,
                                 'lg' => 3

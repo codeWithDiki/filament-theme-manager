@@ -1,3 +1,3 @@
 <x-filament::page>
-    Lorem
+    @livewire('theme-setting')
 </x-filament::page>

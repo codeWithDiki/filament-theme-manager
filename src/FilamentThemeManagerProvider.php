@@ -4,6 +4,7 @@ namespace Codewithdiki\FilamentThemeManager;
 
 require_once ('helpers.php');
 
+use Livewire\Livewire;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
@@ -30,7 +31,7 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
 
         $package
         ->hasViews()
-        ->hasMigrations(['create_themes', 'create_theme_deployment_logs'])
+        ->hasMigrations(['create_themes', 'create_theme_deployment_logs', 'create_theme_settings'])
         ->hasConfigFile();
     }
 
@@ -39,5 +40,13 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
         parent::boot();
 
         Theme::observe(ThemeObserver::class);
+        Livewire::component('theme-setting', \Codewithdiki\FilamentThemeManager\Http\Livewire\Form\ThemeSetting::class);
+
+        Filament::serving(function () {
+            if(get_active_theme()){
+                Filament::registerTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+            }
+        });
+
     }
 }
