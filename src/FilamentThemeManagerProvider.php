@@ -43,7 +43,8 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
         Livewire::component('theme-setting', \Codewithdiki\FilamentThemeManager\Http\Livewire\Form\ThemeSetting::class);
 
         Filament::serving(function () {
-            if(get_active_theme()){
+            $theme = get_active_theme();
+            if($theme?->meta['apply_on_admin'] ?? false){
                 Filament::registerTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
             }
         });

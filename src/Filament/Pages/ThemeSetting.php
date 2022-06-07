@@ -12,4 +12,15 @@ class ThemeSetting extends Page
 
     protected static string $view = 'filament-theme-manager::filament.theme-setting';
     protected static ?string $navigationGroup = 'Appearance';
+
+    protected $listeners = [
+        'themeSettingNotify' => 'transmitNotify'
+    ];
+
+
+    public function transmitNotify($status, $message)
+    {
+        $this->notify($status, $message);
+    }
+
 }

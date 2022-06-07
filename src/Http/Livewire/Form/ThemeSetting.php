@@ -23,7 +23,6 @@ class ThemeSetting extends Component implements \Filament\Forms\Contracts\HasFor
             "gitlab_password" => get_theme_setting('gitlab_password'),
             "github_username" => get_theme_setting('github_username'),
             "github_password" => get_theme_setting('github_password'),
-            "only_apply_on_filament_admin" => get_theme_setting('only_apply_on_filament_admin', false),
         ]);
     }
 
@@ -33,9 +32,7 @@ class ThemeSetting extends Component implements \Filament\Forms\Contracts\HasFor
             Card::make()
             ->schema([
                 Select::make('active_theme')
-                ->options(get_themes()->pluck('name', 'id')),
-                Checkbox::make('only_apply_on_filament_admin')
-                ->default(false)
+                ->options(get_themes()->pluck('name', 'id'))
             ]),
             Grid::make([
                 'default' => 1,
@@ -85,8 +82,10 @@ class ThemeSetting extends Component implements \Filament\Forms\Contracts\HasFor
             }
 
             DB::commit();
+            $this->emit('themeSettingNotify', 'success', 'Settings saved!');
         } catch(\Exception $e){
             DB::rollBack();
+            $this->emit('themeSettingNotify', 'danger', $e->getMessage());
         }
     }
 

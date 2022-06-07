@@ -116,6 +116,12 @@ class ThemeResource extends Resource
                             ->required(),
                             Checkbox::make('meta.deploy_after_created')
                             ->visible(fn(\Livewire\Component $livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord),
+                            Checkbox::make('meta.apply_on_app')
+                            ->helperText('Theme will applied on user view')
+                            ->default(false),
+                            Checkbox::make('meta.apply_on_admin')
+                            ->helperText('Theme will applied on filament admin')
+                            ->default(false),
                             TextInput::make('meta.git_password')
                             ->required()
                             ->visible(fn(callable $get) => $get('connection_type') == GitConnectionEnum::HTTPS()->value)
