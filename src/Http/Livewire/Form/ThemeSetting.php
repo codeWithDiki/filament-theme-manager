@@ -18,7 +18,7 @@ class ThemeSetting extends Component implements \Filament\Forms\Contracts\HasFor
     public function mount() : void
     {
         $this->form->fill([
-            "active_theme" => get_theme_setting('active_theme'),
+            "active_theme" => get_theme_setting('active_theme', 0),
             "gitlab_username" => get_theme_setting('gitlab_username'),
             "gitlab_password" => get_theme_setting('gitlab_password'),
             "github_username" => get_theme_setting('github_username'),
@@ -32,7 +32,8 @@ class ThemeSetting extends Component implements \Filament\Forms\Contracts\HasFor
             Card::make()
             ->schema([
                 Select::make('active_theme')
-                ->options(get_themes()->pluck('name', 'id'))
+                ->nullable()
+                ->options(get_themes()->pluck('name', 'id')->put(0, 'Default'))
             ]),
             Grid::make([
                 'default' => 1,
