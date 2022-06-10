@@ -55,6 +55,9 @@ class DeploymentLogsRelationManager extends HasManyRelationManager
                 //
             ])
             ->actions([
+                Action::make('viewLog')
+                ->url(fn(Model $record) => route('filament.resources.themes.log_view', ['record' => $record->theme, 'log_id' => $record->id]))
+                ->icon('heroicon-o-eye'),
                 Action::make('retry')
                 ->icon('heroicon-o-refresh')
                 ->action(fn(Model $record) => match($record->meta['type'] ?? null){
@@ -64,7 +67,7 @@ class DeploymentLogsRelationManager extends HasManyRelationManager
                 })
                 ->requiresConfirmation()
                 ->visible(fn(Model $record) => $record->status == DeploymentStatusEnum::FAILED()->value)
-                ->color('success')
+                ->color('danger'),
             ])
             ->bulkActions([])
             ->headerActions([]);

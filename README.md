@@ -1,2 +1,5 @@
 # filament-theme-manager
-Plugin for laravel theme manager deploy your theme just by 1 click.
+
+[Installation Guide](https://codewithdiki.com/packages/filament-theme-manager?utm_source=Github)
+
+[Create & Deploy Custom Theme Tutorial](https://codewithdiki.com/tutorial/create-and-deploy-custom-theme?utm_source=Github)

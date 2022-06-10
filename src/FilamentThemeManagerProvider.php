@@ -39,7 +39,9 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
     {
         parent::boot();
 
-        Theme::observe(ThemeObserver::class);
+        $theme_model = config('filament-theme-manager.theme_model', Theme::class);
+
+        $theme_model::observe(ThemeObserver::class);
         Livewire::component('theme-setting', \Codewithdiki\FilamentThemeManager\Http\Livewire\Form\ThemeSetting::class);
 
         Filament::serving(function () {

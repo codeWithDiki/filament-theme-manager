@@ -173,6 +173,7 @@ class ThemeResource extends Resource
             'create' => Pages\CreateTheme::route('/create'),
             'edit' => Pages\EditTheme::route('/{record}/edit'),
             'view' => Pages\ViewTheme::route('/{record}/view'),
+            'log_view' => Pages\ViewDeploymentLog::route('/{record}/view-log')
         ];
     }
 }
