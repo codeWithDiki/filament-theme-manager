@@ -17,10 +17,6 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
 
     public static string $name = 'filament-theme-manager';
 
-    protected array $resources = [
-        ThemeResource::class,
-    ];
-
     protected array $pages = [
         \Codewithdiki\FilamentThemeManager\Filament\Pages\ThemeSetting::class
     ];
@@ -52,4 +48,12 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
         });
 
     }
+
+    protected function getResources() : array
+    {
+        return array_merge([], [
+            config('filament-theme-manager.theme_resource', ThemeResource::class)
+        ]);
+    }
+
 }

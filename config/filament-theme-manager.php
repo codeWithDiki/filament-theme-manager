@@ -29,4 +29,13 @@ return [
     'theme_style' => env('THEME_STYLE_NAME', 'css/app.css'),
     'theme_script' => env('THEME_SCRIPT_NAME', 'js/app.js'),
 
+    /*
+    | ---------------------------------------------------------
+    |   Theme Resources
+    | ---------------------------------------------------------
+    | Just in case you want to modify the resource
+    */
+
+    'theme_resource' => \Codewithdiki\FilamentThemeManager\Filament\Resources\ThemeResource::class
+
 ];
