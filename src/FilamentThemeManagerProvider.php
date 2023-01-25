@@ -9,6 +9,7 @@ use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 use Codewithdiki\FilamentThemeManager\Models\Theme;
+use Codewithdiki\FilamentThemeManager\Enum\AssetCompilerEnum;
 use Codewithdiki\FilamentThemeManager\Observers\ThemeObserver;
 use Codewithdiki\FilamentThemeManager\Filament\Resources\ThemeResource;
 
@@ -42,9 +43,19 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
 
         Filament::serving(function () {
             $theme = get_active_theme();
-            if($theme?->meta['apply_on_admin'] ?? false){
+            
+            if($theme?->meta['apply_on_admin'] ?? false && ($theme->asset_compiler ?? AssetCompilerEnum::MIX()->value) == AssetCompilerEnum::MIX()->value){
+
                 Filament::registerTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+
             }
+
+            if($theme?->meta['apply_on_admin'] ?? false && ($theme->asset_compiler ?? AssetCompilerEnum::MIX()->value) == AssetCompilerEnum::VITE()->value){
+
+                Filament::registerViteTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+                
+            }
+
         });
 
     }

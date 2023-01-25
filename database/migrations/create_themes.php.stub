@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('git_branch');
             $table->string('connection_type');
             $table->string('git_provider');
+            $table->string('asset_compiler')->default("mix");
             $table->boolean('is_child')->default(false);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->longText('meta')->nullable();
