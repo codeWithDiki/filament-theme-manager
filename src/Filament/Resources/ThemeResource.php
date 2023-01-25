@@ -19,6 +19,7 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Forms\Components\BelongsToSelect;
 use Codewithdiki\FilamentThemeManager\Enum\GitProviderEnum;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Codewithdiki\FilamentThemeManager\Enum\AssetCompilerEnum;
 use Codewithdiki\FilamentThemeManager\Enum\GitConnectionEnum;
 use Codewithdiki\FilamentThemeManager\Filament\Resources\ThemeResource\Pages;
 use Codewithdiki\FilamentThemeManager\Filament\Resources\ThemeResource\RelationManagers;
@@ -105,6 +106,11 @@ class ThemeResource extends Resource
                                     ? 'Make sure your server has whitelist ssh key to connect your repository'
                                     : null;
                                 }
+                            )
+                            ->required(),
+                            Select::make('asset_compiler')
+                            ->options(
+                                collect(AssetCompilerEnum::toValues())->combine(AssetCompilerEnum::toLabels())
                             )
                             ->required(),
                             Select::make('git_provider')

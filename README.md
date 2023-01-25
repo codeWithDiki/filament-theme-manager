@@ -6,6 +6,22 @@
 This plugin is stand above hexadog/laravel-themes-manager and filament/filament so before you install this plugin I recommend you to learn about them first.
 This plugin is require you to run a proccess in a queue. Use Laravel Horizon or other tools to run queue and also i recommend you to use redis.
 
+### READ THIS
+If you install this plugin before vite is supported you should create new migrations for themes table, your migration should looks like this
+
+```
+    public function up()
+    {
+        Schema::table('themes', function (Blueprint $table) {
+            if (Schema::hasColumn('themes', 'asset_compiler')) {
+                $table->string('asset_compiler')->default('mix');
+            } else {
+                $table->string('asset_compiler')->default('mix');
+            }
+        });
+    }
+```
+
 ### Install Guide
 
 ```
