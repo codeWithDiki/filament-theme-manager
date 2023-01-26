@@ -44,16 +44,16 @@ class FilamentThemeManagerProvider extends PluginServiceProvider
         Filament::serving(function () {
             $theme = get_active_theme();
             
-            if($theme?->meta['apply_on_admin'] ?? false && ($theme->asset_compiler ?? AssetCompilerEnum::MIX()->value) == AssetCompilerEnum::MIX()->value){
+            if($theme?->meta['apply_on_admin'] ?? false){
 
-                Filament::registerTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+                if($theme->asset_compiler == AssetCompilerEnum::MIX()->value){
+                    Filament::registerTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+                }
 
-            }
+                if($theme->asset_compiler == AssetCompilerEnum::VITE()->value){
+                    Filament::registerViteTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
+                }
 
-            if($theme?->meta['apply_on_admin'] ?? false && ($theme->asset_compiler ?? AssetCompilerEnum::MIX()->value) == AssetCompilerEnum::VITE()->value){
-
-                Filament::registerViteTheme(theme_asset(config('filament-theme-manager.theme_style', 'css/filament.css')));
-                
             }
 
         });
