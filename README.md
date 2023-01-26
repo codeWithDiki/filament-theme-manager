@@ -13,11 +13,7 @@ If you install this plugin before vite is supported you should create new migrat
     public function up()
     {
         Schema::table('themes', function (Blueprint $table) {
-            if (Schema::hasColumn('themes', 'asset_compiler')) {
-                $table->string('asset_compiler')->default('mix');
-            } else {
-                $table->string('asset_compiler')->default('mix');
-            }
+            $table->string('asset_compiler')->default('mix');
         });
     }
 ```
