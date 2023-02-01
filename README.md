@@ -51,3 +51,6 @@ php artisan vendor:publish --tag=filament-theme-manager-views
 ```
 php artisan migrate
 ```
+
+![image](https://user-images.githubusercontent.com/62064510/216070237-71ade92c-5e45-4d01-ba87-b7194f39d41b.png)
+![image](https://user-images.githubusercontent.com/62064510/216070303-7b2f7d76-6de0-455d-aeed-81d303310d27.png)
