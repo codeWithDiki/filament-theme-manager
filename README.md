@@ -54,3 +54,6 @@ php artisan migrate
 
 ![image](https://user-images.githubusercontent.com/62064510/216070237-71ade92c-5e45-4d01-ba87-b7194f39d41b.png)
 ![image](https://user-images.githubusercontent.com/62064510/216070303-7b2f7d76-6de0-455d-aeed-81d303310d27.png)
+![image](https://user-images.githubusercontent.com/62064510/216371013-77c8aeee-42fc-4138-bdc4-fc4a77958b65.png)
+![image](https://user-images.githubusercontent.com/62064510/216371126-048af56a-86b4-4caf-bf88-d2affc0647df.png)
+
